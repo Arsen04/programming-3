@@ -53,8 +53,8 @@
 //x-x
 //-y-
 //x-x
-*/ 
-var matrix = matrixo(40,40);
+*/
+var matrix = matrixo(40, 40);
 var n = 10;
 var m = n;
 var side = 10;
@@ -63,14 +63,14 @@ var grassEaterArr = [];
 var wildArr = [];
 var moverArr = [];
 var doubleArr = [];
-    // var matrix = [
-    //               [4,4,4,4,4],
-    //   		        [4,4,4,4,4],
-    //   		        [4,4,4,4,4],
-    //   		        [4,4,4,4,4],
-    //   		        [4,4,4,4,5]
-    //   		   ];
- 
+// var matrix = [
+//               [4,4,4,4,4],
+//   		        [4,4,4,4,4],
+//   		        [4,4,4,4,4],
+//   		        [4,4,4,4,4],
+//   		        [4,4,4,4,5]
+//   		   ];
+
 function setup() {
     frameRate(2);
     background('#acacac');
@@ -81,18 +81,18 @@ function setup() {
                 console.log(1);
                 grassArr.push(new Grass(x, y))
             }
-             else if (matrix[y][x] == 2) {
-                 grassEaterArr.push(new GrassEater(x, y))
-             }
-             else if (matrix[y][x] == 3) {
-                 wildArr.push(new Wild(x, y))
-             }
-             else if (matrix[y][x] == 4) {
-                 moverArr.push(new mover(x, y))
-             }
-             else if (matrix[y][x] == 5) {
-                 doubleArr.push(new double(x, y))
-             }
+            else if (matrix[y][x] == 2) {
+                grassEaterArr.push(new GrassEater(x, y))
+            }
+            else if (matrix[y][x] == 3) {
+                wildArr.push(new Wild(x, y))
+            }
+            else if (matrix[y][x] == 4) {
+                moverArr.push(new Mover(x, y))
+            }
+            else if (matrix[y][x] == 5) {
+                doubleArr.push(new Double(x, y))
+            }
         }
     }
     createCanvas(matrix.length * side, matrix.length * side);
@@ -113,18 +113,18 @@ function draw() {
                 fill("yellow");
                 rect(x * side, y * side, side, side);
             }
-             else if (matrix[y][x] == 3) {
+            else if (matrix[y][x] == 3) {
                 fill("red");
                 rect(x * side, y * side, side, side);
             }
-              else if (matrix[y][x] == 4) {
-                  fill("orange");
-                  rect(x * side, y * side, side, side);
-              }
-              else if (matrix[y][x] == 5) {
-                  fill("#9933ff");
-                  rect(x * side, y * side, side, side);
-              }
+            else if (matrix[y][x] == 4) {
+                fill("orange");
+                rect(x * side, y * side, side, side);
+            }
+            else if (matrix[y][x] == 5) {
+                fill("#9933ff");
+                rect(x * side, y * side, side, side);
+            }
         }
     }
     for (var i in grassArr) {
@@ -133,33 +133,33 @@ function draw() {
     for (var i in grassEaterArr) {
         grassEaterArr[i].eat();
     }
-      for (var i in wildArr) {
-          wildArr[i].EatG();
-      }
-      for (var i in moverArr) {
-          moverArr[i].moveEat();
-      }
-      for (var i in doubleArr) {
-          doubleArr[i].doubEat();
-      }
-    
+    for (var i in wildArr) {
+        wildArr[i].EatG();
+    }
+    for (var i in moverArr) {
+        moverArr[i].moveEat();
+    }
+    for (var i in doubleArr) {
+        doubleArr[i].doubEat();
+    }
+
 }
 function matrixo(m) {
     var matrix = [];
     for (var i = 0; i < m; i++) {
         matrix.push([]);
         for (var j = 0; j < m; j++) {
-            matrix[i][j] = Math.floor(Math.random() * 3 );
+            matrix[i][j] = Math.floor(Math.random() * 3);
         }
-         for (var j = 0; j < m; j++) {
-             matrix[i][j] = Math.floor(Math.random() * 4 );
-         }
-          for (var j = 0; j < m; j++) {
-              matrix[i][j] = Math.floor(Math.random() * 5 );
-          }
-          for (var j = 0; j < m; j++) {
-              matrix[i][j] = Math.floor(Math.random() * 6 );
-          }
+        for (var j = 0; j < m; j++) {
+            matrix[i][j] = Math.floor(Math.random() * 4);
+        }
+        for (var j = 0; j < m; j++) {
+            matrix[i][j] = Math.floor(Math.random() * 5);
+        }
+        for (var j = 0; j < m; j++) {
+            matrix[i][j] = Math.floor(Math.random() * 6);
+        }
     }
     return matrix;
 }
