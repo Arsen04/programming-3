@@ -2,7 +2,7 @@
 class Wild extends Base {
     constructor(x, y) {
         super(x, y);
-        this.energy = 14;
+        this.energy = 35;
         this.multiply = 18;
     }
     getNewCoordinates() {
@@ -50,9 +50,27 @@ class Wild extends Base {
             this.die();
         }
     }
+    move1() {
+
+        var emptyCells = this.chooseCell(0);
+        var newCellM = random(emptyCells);
+        if (newCellM) {
+            var newXgr = newCellM[0];
+            var newYgr = newCellM[1];
+            matrix[this.y][this.x] = 0;
+            matrix[newYgr][newXgr] = 3;
+
+            this.x = newXgr;
+            this.y = newYgr;
+        }
+        this.energy--;
+        if (this.energy <= 0) {
+            this.die();
+        }
+    }
     EatG() {
         var newCell = random(this.chooseCell(2));
-        //var newCell1 = random(this.chooseCell(3));
+        var newCell1 = random(this.chooseCell(6));
         if (newCell) {
             for (var i in grassEaterArr) {
                 if (newCell[0] == grassEaterArr[i].x && newCell[1] == grassEaterArr[i].y) {
@@ -71,29 +89,53 @@ class Wild extends Base {
                 this.energy = 8;
             }
         }
-        // else if (newCell1) {
-        //     for (var i in moverArr) {
-        //         if (newCell1[0] == moverArr[i].x && newCell1[1] == moverArr[i].y) {
-        //             moverArr.splice(i, 1);
-        //             break;
-        //         }
-        //     }
-        //     matrix[this.y][this.x] = 0;
-        //     this.x = newCell1[0];
-        //     this.y = newCell1[1];
-        //     matrix[this.y][this.x] = 3;
-        //     this.energy++;
+        else if (newCell1) {
+            for (var i in chameleonArr) {
+                if (newCell1[0] == chameleonArr[i].x && newCell1[1] == chameleonArr[i].y) {
+                    chameleonArr.splice(i, 1);
+                    break;
+                }
+            }
+            matrix[this.y][this.x] = 0;
+            this.x = newCell1[0];
+            this.y = newCell1[1];
+            matrix[this.y][this.x] = 3;
+            this.energy++;
 
-        //     if (this.energy >= 12) {
-        //         this.WiSpread();
-        //         this.energy = 3;
-        //     }
-        // }
+            if (this.energy >= 38) {
+                this.WiSpread();
+                this.energy = 35;
+            }
+        }
         else {
             this.move();
         }
     }
+    EatH() {
+        var newCell = random(this.chooseCell(1));
+        var newCell1 = random(this.chooseCell(6));
+        if (newCell) {
+            for (var i in grassArr) {
+                if (newCell[0] == grassArr[i].x && newCell[1] == grassArr[i].y) {
+                    grassArr.splice(i, 1);
+                    break;
+                }
+            }
+            matrix[this.y][this.x] = 0;
+            this.x = newCell[0];
+            this.y = newCell[1];
+            matrix[this.y][this.x] = 3;
+            this.energy++;
 
+            if (this.energy >= 20) {
+                this.WiSpread();
+                this.energy = 16;
+            }
+        }
+        else {
+            this.move1();
+        }
+    }
     WiSpread() {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);

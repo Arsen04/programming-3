@@ -64,18 +64,13 @@ var grassEaterArr = [];
 var wildArr = [];
 var moverArr = [];
 var doubleArr = [];
-// var matrix = [
-//               [4,4,4,4,4],
-//   		        [4,4,4,4,4],
-//   		        [4,4,4,4,4],
-//   		        [4,4,4,4,4],
-//   		        [4,4,4,4,5]
-//   		   ];
-//var weathers = ["autumn","spring","summer","winter"] 
+var chameleonArr = [];
 var weather = "winter";
-    
+var c = 0;
+var cham = 0; 
+var time = 0;
 function setup() {
-    frameRate(2);
+    frameRate(30);
     background('#acacac');
     for (var y = 0; y < matrix.length; y++) {
 
@@ -96,27 +91,31 @@ function setup() {
             else if (matrix[y][x] == 5) {
                 doubleArr.push(new Double(x, y))
             }
+            else if (matrix[y][x] == 6) {
+                chameleonArr.push(new Chameleon(x, y))
+            }
         }
     }
     createCanvas(matrix.length * side, matrix.length * side);
 }
 function draw() {
+    c++;
     days++;
      if(days<50){
          t="winter"; 
-         document.getElementById("text").innerHTML = "Weather - Winter";
+         document.getElementById("text").innerHTML = "<h1>Weather - Winter</h1>";
      }
      else if(days>=50 && days<150){
          t="spring"; 
-         document.getElementById("text").innerHTML = "Weather - Spring";
+         document.getElementById("text").innerHTML = "<h1>Weather - Spring</h1>";
      }
      else if(days>=150 && days<250){
          t="summer"; 
-         document.getElementById("text").innerHTML = "Weather - Summer";
+         document.getElementById("text").innerHTML = "<h1>Weather - Summer</h1>";
      }
      else if(days>=250 && days<500){
          t="autumn"; 
-         document.getElementById("text").innerHTML = "Weather - Autumn";
+         document.getElementById("text").innerHTML = "<h1>Weather - Autumn</h1>";
      }
     // if(days<10){
     //     t="winter"; //winter
@@ -133,7 +132,66 @@ function draw() {
     else{
         days = 0; 
     }
+    time++;
+    if (time <= 100) {
+        document.getElementById("time").innerHTML = "<h3>UNIQUE EVENT - " + time + "/100  </h3>";
+    }
+    else if (time > 100 && time <= 180) {
+        document.getElementById("time").innerHTML = "<h3>UNIQUE EVENT - Apocalypse of Die</h3>";
+        for (var i in grassEaterArr) {
+            grassEaterArr[i].die();//die
+            console.log("something");
+        }
+        for (var i in chameleonArr) {
+            chameleonArr[i].die();//die
+            console.log("something");
+        }
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 2) {
+                    matrix[y][x] = 0
+                }
+            }
+        }
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 6) {
+                    matrix[y][x] = 0
+                }
+            }
+        }
+    }
 
+    else if (time > 102 && time <= 180) {
+        for (var i in wildArr) {
+            wildArr[i].EatH();
+        }
+
+        console.log("true");
+    }
+    cham++;
+    if (cham < 10) {
+        q = 1;
+    }
+    else if (cham >= 5 && cham < 10) {
+        q = 2;
+    }
+    else if (cham >= 10 && cham < 15) {
+        q = 3;
+    }
+    else if (cham >= 15 && cham < 20) {
+        q = 4;
+    }
+    else if (cham >= 20 && cham < 25) {
+        q = 5;
+    }
+    else if (cham >= 25 && cham < 30) {
+        q = 6;
+    }
+    
+    else {
+        cham = 0;
+    }
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
@@ -142,7 +200,7 @@ function draw() {
                     fill("white");
                 }
                 else if(t=="autumn"){
-                    fill("blue");
+                    fill("orange");
                 }
                 else{
                     fill("green");
@@ -171,6 +229,47 @@ function draw() {
                 fill("#9933ff");
                 
             }
+            else if (matrix[y][x] == 6) {
+                // if (q == 1) {
+                //     fill("pink");
+                // }
+                // else if (q == 2) {
+                //     fill("#ccffff");
+                // }
+                // else if (q == 3) {
+                //     fill("#ccff99");
+                // }
+                // else if (q == 4) {
+                //     fill("#333300");
+                // }
+                // else if (q == 5) {
+                //     fill("#00cc99");
+                // }
+                // else if (q == 6) {
+                //     fill("#ffcccc");
+                // }
+                if (q == 1) {
+                    fill("pink");
+                    console.log("Cool");
+                }
+                else if (q == 2) {
+                    fill("pink");
+                }
+                else if (q == 3) {
+                    fill("#ccffff");
+                }
+                else if (q == 4) {
+                    fill("#ccff99");
+                }
+                else if (q == 5) {
+                    fill("#333300");
+                }
+                else if (q == 6) {
+                    fill("#00cc99");
+                }
+
+
+            }
             
             rect(x * side, y * side, side, side);
         }
@@ -190,6 +289,9 @@ function draw() {
     for (var i in doubleArr) {
         doubleArr[i].doubEat();
     }
+    for (var i in chameleonArr) {
+        chameleonArr[i].EatG();
+    }
 
 }
 function matrixo(m) {
@@ -202,11 +304,14 @@ function matrixo(m) {
         for (var j = 0; j < m; j++) {
             matrix[i][j] = Math.floor(Math.random() * 4);
         }
-        for (var j = 0; j < m; j++) {
+        for (var j = 0; j < m+3; j++) {
             matrix[i][j] = Math.floor(Math.random() * 5);
         }
         for (var j = 0; j < m; j++) {
             matrix[i][j] = Math.floor(Math.random() * 6);
+        }
+        for (var j = 0; j < m; j++) {
+            matrix[i][j] = Math.floor(Math.random() * 7);
         }
     }
     return matrix;

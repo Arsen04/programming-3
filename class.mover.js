@@ -2,7 +2,7 @@
 class Mover extends Base {
     constructor(x, y) {
         super(x, y);
-        this.energy = 20;
+        this.energy = 40;
         this.multiply = 1;
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -91,7 +91,7 @@ class Mover extends Base {
 
             if (this.energy >= 12) {
                 this.moveSpread();
-                this.energy = 6;
+                this.energy = 10;
             }
 
         }

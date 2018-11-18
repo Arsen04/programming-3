@@ -2,7 +2,7 @@
 class Double extends Base {
     constructor(x, y) {
         super(x, y);
-        this.energy = 6;
+        this.energy = 12;
         this.multiply = 1;
         this.directions = [
             [this.x - 2, this.y - 2],
@@ -95,9 +95,9 @@ class Double extends Base {
             matrix[this.y][this.x] = 5;
             this.energy++;
 
-            if (this.energy >= 12) {
+            if (this.energy >= 14) {
                 this.dSpread();
-                this.energy = 6;
+                this.energy = 12;
             }
         }
         // if (newCell) {
