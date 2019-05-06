@@ -1,4 +1,4 @@
-class Base {
+class Base  {
     constructor(x, y, index) {
         this.x = x;
         this.y = y;
