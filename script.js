@@ -54,22 +54,23 @@
 //-y-
 //x-x
 */
-var matrix = matrixo(40, 40);
 var n = 10;
 var m = n;
 var side = 10;
 var days = 0
-var grassArr = [];
-var grassEaterArr = [];
-var wildArr = [];
-var moverArr = [];
-var doubleArr = [];
-var chameleonArr = [];
+// var matrix = matrixo(40, 40);
+// var grassArr = [];
+// var grassEaterArr = [];
+// var wildArr = [];
+// var moverArr = [];
+// var doubleArr = [];
+// var chameleonArr = [];
 var weather = "winter";
 var c = 0;
-var cham = 0; 
+var cham = 0;
 var time = 0;
 function setup() {
+    var socket = io();
     frameRate(30);
     background('#acacac');
     for (var y = 0; y < matrix.length; y++) {
@@ -101,22 +102,22 @@ function setup() {
 function draw() {
     c++;
     days++;
-     if(days<50){
-         t="winter"; 
-         document.getElementById("text").innerHTML = "<h1>Weather - Winter</h1>";
-     }
-     else if(days>=50 && days<150){
-         t="spring"; 
-         document.getElementById("text").innerHTML = "<h1>Weather - Spring</h1>";
-     }
-     else if(days>=150 && days<250){
-         t="summer"; 
-         document.getElementById("text").innerHTML = "<h1>Weather - Summer</h1>";
-     }
-     else if(days>=250 && days<500){
-         t="autumn"; 
-         document.getElementById("text").innerHTML = "<h1>Weather - Autumn</h1>";
-     }
+    if (days < 50) {
+        t = "winter";
+        document.getElementById("text").innerHTML = "<h1>Weather - Winter</h1>";
+    }
+    else if (days >= 50 && days < 150) {
+        t = "spring";
+        document.getElementById("text").innerHTML = "<h1>Weather - Spring</h1>";
+    }
+    else if (days >= 150 && days < 250) {
+        t = "summer";
+        document.getElementById("text").innerHTML = "<h1>Weather - Summer</h1>";
+    }
+    else if (days >= 250 && days < 500) {
+        t = "autumn";
+        document.getElementById("text").innerHTML = "<h1>Weather - Autumn</h1>";
+    }
     // if(days<10){
     //     t="winter"; //winter
     // }
@@ -129,8 +130,8 @@ function draw() {
     // else if(days>=30 && days<40){
     //     t="autumn"; //spring
     // }
-    else{
-        days = 0; 
+    else {
+        days = 0;
     }
     time++;
     if (time <= 100) {
@@ -188,7 +189,7 @@ function draw() {
     else if (cham >= 25 && cham < 30) {
         q = 6;
     }
-    
+
     else {
         cham = 0;
     }
@@ -196,17 +197,17 @@ function draw() {
         for (var x = 0; x < matrix[y].length; x++) {
 
             if (matrix[y][x] == 1) {
-                if(t=="winter"){
+                if (t == "winter") {
                     fill("white");
                 }
-                else if(t=="autumn"){
+                else if (t == "autumn") {
                     fill("orange");
                 }
-                else{
+                else {
                     fill("green");
                 }
 
-                
+
                 //rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 0) {
@@ -223,11 +224,11 @@ function draw() {
             }
             else if (matrix[y][x] == 4) {
                 fill("orange");
-               //rect(x * side, y * side, side, side);
+                //rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 5) {
                 fill("#9933ff");
-                
+
             }
             else if (matrix[y][x] == 6) {
                 // if (q == 1) {
@@ -270,7 +271,7 @@ function draw() {
 
 
             }
-            
+
             rect(x * side, y * side, side, side);
         }
     }
@@ -294,25 +295,25 @@ function draw() {
     }
 
 }
-function matrixo(m) {
-    var matrix = [];
-    for (var i = 0; i < m; i++) {
-        matrix.push([]);
-        for (var j = 0; j < m; j++) {
-            matrix[i][j] = Math.floor(Math.random() * 3);
-        }
-        for (var j = 0; j < m; j++) {
-            matrix[i][j] = Math.floor(Math.random() * 4);
-        }
-        for (var j = 0; j < m+3; j++) {
-            matrix[i][j] = Math.floor(Math.random() * 5);
-        }
-        for (var j = 0; j < m; j++) {
-            matrix[i][j] = Math.floor(Math.random() * 6);
-        }
-        for (var j = 0; j < m; j++) {
-            matrix[i][j] = Math.floor(Math.random() * 7);
-        }
-    }
-    return matrix;
-}
+//  function matrixo(m) {
+//      var matrix = [];
+//      for (var i = 0; i < m; i++) {
+//          matrix.push([]);
+//          for (var j = 0; j < m; j++) {
+//              matrix[i][j] = Math.floor(Math.random() * 3);
+//          }
+//          for (var j = 0; j < m; j++) {
+//              matrix[i][j] = Math.floor(Math.random() * 4);
+//          }
+//          for (var j = 0; j < m + 3; j++) {
+//              matrix[i][j] = Math.floor(Math.random() * 5);
+//          }
+//          for (var j = 0; j < m; j++) {
+//              matrix[i][j] = Math.floor(Math.random() * 6);
+//          }
+//          for (var j = 0; j < m; j++) {
+//              matrix[i][j] = Math.floor(Math.random() * 7);
+//          }
+//      }
+//      return matrix;
+//  }

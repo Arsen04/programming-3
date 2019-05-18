@@ -1,5 +1,7 @@
 ////////////////////////////////////////////////GRASS///////////////////////////////////////////
-class Grass extends Base {
+var Base = require("./Base");
+var random = require("./random");
+module.exports = class Grass extends Base {
     constructor(x, y, index) {
         super(x, y, index);
         this.multiply = 20;
