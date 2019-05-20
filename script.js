@@ -58,7 +58,7 @@ var n = 10;
 var m = n;
 var side = 10;
 var days = 0
-// var matrix = matrixo(40, 40);
+
 // var grassArr = [];
 // var grassEaterArr = [];
 // var wildArr = [];
@@ -69,36 +69,156 @@ var weather = "winter";
 var c = 0;
 var cham = 0;
 var time = 0;
+
+
+
+
+
+// let random = require('./modules/random.js');
 function setup() {
     var socket = io();
+    
+    socket.on("data", drawCreatures);
+    socket.on("data", weatherchange);
     frameRate(30);
     background('#acacac');
-    for (var y = 0; y < matrix.length; y++) {
+    
+}
+    function drawCreatures(matrix) {
+        createCanvas(matrix.length * side, matrix.length * side);
+        for (var y = 0; y < matrix.length; y++) {
 
-        for (var x = 0; x < matrix[y].length; x++) {
-            if (matrix[y][x] == 1) {
-                console.log(1);
-                grassArr.push(new Grass(x, y))
-            }
-            else if (matrix[y][x] == 2) {
-                grassEaterArr.push(new GrassEater(x, y))
-            }
-            else if (matrix[y][x] == 3) {
-                wildArr.push(new Wild(x, y))
-            }
-            else if (matrix[y][x] == 4) {
-                moverArr.push(new Mover(x, y))
-            }
-            else if (matrix[y][x] == 5) {
-                doubleArr.push(new Double(x, y))
-            }
-            else if (matrix[y][x] == 6) {
-                chameleonArr.push(new Chameleon(x, y))
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 1) {
+                    console.log(1);
+                    grassArr.push(new Grass(x, y))
+                }
+                else if (matrix[y][x] == 2) {
+                    grassEaterArr.push(new GrassEater(x, y))
+                }
+                else if (matrix[y][x] == 3) {
+                    wildArr.push(new Wild(x, y))
+                }
+                else if (matrix[y][x] == 4) {
+                    moverArr.push(new Mover(x, y))
+                }
+                else if (matrix[y][x] == 5) {
+                    doubleArr.push(new Double(x, y))
+                }
+                else if (matrix[y][x] == 6) {
+                    chameleonArr.push(new Chameleon(x, y))
+                }
             }
         }
     }
-    createCanvas(matrix.length * side, matrix.length * side);
-}
+    function weatherchange(matrix){
+        cham++;
+        if (cham < 10) {
+            q = 1;
+        }
+        else if (cham >= 5 && cham < 10) {
+            q = 2;
+        }
+        else if (cham >= 10 && cham < 15) {
+            q = 3;
+        }
+        else if (cham >= 15 && cham < 20) {
+            q = 4;
+        }
+        else if (cham >= 20 && cham < 25) {
+            q = 5;
+        }
+        else if (cham >= 25 && cham < 30) {
+            q = 6;
+        }
+    
+        else {
+            cham = 0;
+        }
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+    
+                if (matrix[y][x] == 1) {
+                    if (t == "winter") {
+                        fill("white");
+                    }
+                    else if (t == "autumn") {
+                        fill("orange");
+                    }
+                    else {
+                        fill("green");
+                    }
+    
+    
+                    //rect(x * side, y * side, side, side);
+                }
+                else if (matrix[y][x] == 0) {
+                    fill("#acacac");
+                    //rect(x * side, y * side, side, side);
+                }
+                else if (matrix[y][x] == 2) {
+                    fill("yellow");
+                    //rect(x * side, y * side, side, side);
+                }
+                else if (matrix[y][x] == 3) {
+                    fill("red");
+                    //rect(x * side, y * side, side, side);
+                }
+                else if (matrix[y][x] == 4) {
+                    fill("orange");
+                    //rect(x * side, y * side, side, side);
+                }
+                else if (matrix[y][x] == 5) {
+                    fill("#9933ff");
+    
+                }
+                else if (matrix[y][x] == 6) {
+                    // if (q == 1) {
+                    //     fill("pink");
+                    // }
+                    // else if (q == 2) {
+                    //     fill("#ccffff");
+                    // }
+                    // else if (q == 3) {
+                    //     fill("#ccff99");
+                    // }
+                    // else if (q == 4) {
+                    //     fill("#333300");
+                    // }
+                    // else if (q == 5) {
+                    //     fill("#00cc99");
+                    // }
+                    // else if (q == 6) {
+                    //     fill("#ffcccc");
+                    // }
+                    if (q == 1) {
+                        fill("pink");
+                        console.log("Cool");
+                    }
+                    else if (q == 2) {
+                        fill("pink");
+                    }
+                    else if (q == 3) {
+                        fill("#ccffff");
+                    }
+                    else if (q == 4) {
+                        fill("#ccff99");
+                    }
+                    else if (q == 5) {
+                        fill("#333300");
+                    }
+                    else if (q == 6) {
+                        fill("#00cc99");
+                    }
+    
+    
+                }
+    
+                rect(x * side, y * side, side, side);
+            }
+        }
+    }
+
 function draw() {
     c++;
     days++;
@@ -133,151 +253,50 @@ function draw() {
     else {
         days = 0;
     }
-    time++;
-    if (time <= 100) {
-        document.getElementById("time").innerHTML = "<h3>UNIQUE EVENT - " + time + "/100  </h3>";
-    }
-    else if (time > 100 && time <= 180) {
-        document.getElementById("time").innerHTML = "<h3>UNIQUE EVENT - Apocalypse of Die</h3>";
-        for (var i in grassEaterArr) {
-            grassEaterArr[i].die();//die
-            console.log("something");
-        }
-        for (var i in chameleonArr) {
-            chameleonArr[i].die();//die
-            console.log("something");
-        }
-        for (var y = 0; y < matrix.length; y++) {
-            for (var x = 0; x < matrix[y].length; x++) {
-                if (matrix[y][x] == 2) {
-                    matrix[y][x] = 0
-                }
-            }
-        }
-        for (var y = 0; y < matrix.length; y++) {
-            for (var x = 0; x < matrix[y].length; x++) {
-                if (matrix[y][x] == 6) {
-                    matrix[y][x] = 0
-                }
-            }
-        }
-    }
+    //////Event
+    // time++;
+    // if (time <= 100) {
+    //     document.getElementById("time").innerHTML = "<h3>UNIQUE EVENT - " + time + "/100  </h3>";
+    // }
+    // else if (time > 100 && time <= 180) {
+    //     document.getElementById("time").innerHTML = "<h3>UNIQUE EVENT - Apocalypse of Die</h3>";
+    //     for (var i in grassEaterArr) {
+    //         grassEaterArr[i].die();//die
+    //         console.log("something");
+    //     }
+    //     for (var i in chameleonArr) {
+    //         chameleonArr[i].die();//die
+    //         console.log("something");
+    //     }
+    //     for (var y = 0; y < matrix.length; y++) {
+    //         for (var x = 0; x < matrix[y].length; x++) {
+    //             if (matrix[y][x] == 2) {
+    //                 matrix[y][x] = 0
+    //             }
+    //         }
+    //     }
+    //     for (var y = 0; y < matrix.length; y++) {
+    //         for (var x = 0; x < matrix[y].length; x++) {
+    //             if (matrix[y][x] == 6) {
+    //                 matrix[y][x] = 0
+    //             }
+    //         }
+    //     }
+    // }
 
-    else if (time > 102 && time <= 180) {
-        for (var i in wildArr) {
-            wildArr[i].EatH();
-        }
+    // else if (time > 102 && time <= 180) {
+    //     for (var i in wildArr) {
+    //         wildArr[i].EatH();
+    //     }
 
-        console.log("true");
-    }
-    cham++;
-    if (cham < 10) {
-        q = 1;
-    }
-    else if (cham >= 5 && cham < 10) {
-        q = 2;
-    }
-    else if (cham >= 10 && cham < 15) {
-        q = 3;
-    }
-    else if (cham >= 15 && cham < 20) {
-        q = 4;
-    }
-    else if (cham >= 20 && cham < 25) {
-        q = 5;
-    }
-    else if (cham >= 25 && cham < 30) {
-        q = 6;
-    }
+    //     console.log("true");
+    // }
+    
+    
 
-    else {
-        cham = 0;
-    }
-    for (var y = 0; y < matrix.length; y++) {
-        for (var x = 0; x < matrix[y].length; x++) {
-
-            if (matrix[y][x] == 1) {
-                if (t == "winter") {
-                    fill("white");
-                }
-                else if (t == "autumn") {
-                    fill("orange");
-                }
-                else {
-                    fill("green");
-                }
-
-
-                //rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 0) {
-                fill("#acacac");
-                //rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 2) {
-                fill("yellow");
-                //rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 3) {
-                fill("red");
-                //rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 4) {
-                fill("orange");
-                //rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 5) {
-                fill("#9933ff");
-
-            }
-            else if (matrix[y][x] == 6) {
-                // if (q == 1) {
-                //     fill("pink");
-                // }
-                // else if (q == 2) {
-                //     fill("#ccffff");
-                // }
-                // else if (q == 3) {
-                //     fill("#ccff99");
-                // }
-                // else if (q == 4) {
-                //     fill("#333300");
-                // }
-                // else if (q == 5) {
-                //     fill("#00cc99");
-                // }
-                // else if (q == 6) {
-                //     fill("#ffcccc");
-                // }
-                if (q == 1) {
-                    fill("pink");
-                    console.log("Cool");
-                }
-                else if (q == 2) {
-                    fill("pink");
-                }
-                else if (q == 3) {
-                    fill("#ccffff");
-                }
-                else if (q == 4) {
-                    fill("#ccff99");
-                }
-                else if (q == 5) {
-                    fill("#333300");
-                }
-                else if (q == 6) {
-                    fill("#00cc99");
-                }
-
-
-            }
-
-            rect(x * side, y * side, side, side);
-        }
-    }
-    for (var i in grassArr) {
-        grassArr[i].mul();
-    }
+    // for (var i in grassArr) {
+    //     grassArr[i].mul();
+    // }
     for (var i in grassEaterArr) {
         grassEaterArr[i].eat();
     }

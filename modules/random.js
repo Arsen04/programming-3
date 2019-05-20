@@ -21,4 +21,4 @@ function matrixo(m) {
     return matrix;
 }
 
-module.exports = random;
+module.exports = matrixo;
