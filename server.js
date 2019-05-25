@@ -1,5 +1,5 @@
-var base = require('./modules/base');
-var grass = require('./modules/class.grass');
+base = require('./modules/base');
+Grass = require('./modules/class.grass');
 
 // var wild = require('./modules/class.wild.js');
 // var grasseater = require('./modules/class.grasseater.js');
@@ -9,19 +9,20 @@ var grass = require('./modules/class.grass');
 
 let matrixo = require('./modules/random.js');
 matrix = matrixo(40, 40);
+var n = 10;
+var m = n;
+var side = 10;
 
 var data = {
-    matrix:matrix,
+    matrix: matrix,
 }
 
-
-
- grassArr = [];
- grassEaterArr = [];
- wildArr = [];
- moverArr = [];
- doubleArr = [];
- chameleonArr = [];
+grassArr = [];
+grassEaterArr = [];
+wildArr = [];
+moverArr = [];
+doubleArr = [];
+chameleonArr = [];
 
 
 
@@ -34,7 +35,7 @@ io.emit("data", matrix);
 
 app.use(express.static("."));
 app.get('/', function (req, res) {
-   res.redirect('index.html');
+    res.redirect('index.html');
 });
 server.listen(4000);
 
@@ -43,7 +44,7 @@ function creatingObjects() {
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
-                var grass = new Grass(x, y);
+                grass = new Grass(x, y);
                 grassArr.push(grass);
             }
         }

@@ -1,6 +1,8 @@
 ////////////////////////////////////////////////GRASS///////////////////////////////////////////
+
 var Base = require("./base");
 var random = require("./random.js");
+console.log(matrix);
 module.exports = class Grass extends Base {
     constructor(x, y, index) {
         super(x, y, index);
